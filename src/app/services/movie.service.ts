@@ -3,19 +3,18 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { ApiResponse } from '../interfaces/apiResponse';
 import { Movie } from '../interfaces/movies';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MovieService {
-  //Key 54d169bd
 
-  private API_URL: string = 'https://www.omdbapi.com/?i=tt3896198&apikey=54d169bd';
 
-  constructor(private hhtp: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   getMovies(searchTerm: string): Observable<Movie[]> {
-    return this.hhtp.get<ApiResponse>(`${this.API_URL}&s=${searchTerm}`).pipe(
+    return this.http.get<ApiResponse>(`${environment.API_URL}&s=${searchTerm}`).pipe(
       map(response => {
         return response.Search;
       })
